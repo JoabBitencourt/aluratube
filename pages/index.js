@@ -2,25 +2,28 @@ import React  from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import {CSSReset} from "../src/components/CSSReset"
-import Menu from "../src/components/Menu/componentes";
+import Menu from "../src/components/Menu";
 import {StyledTimeline} from "../src/components/TimeLine"
+
+const StyledHome = styled.div`
+  
+`
 
 const HomePage = () => {
   const estiloDaHomePage = { 
-    // backgroundColor: "red"
+    // backgroundColor: "black"
  };
   const [valorDoFiltro, setValorDoFiltro] = React.useState("")
   // console.log(setValorDoFiltro);
   return (
     <>
-      <CSSReset />
-      <div style={estiloDaHomePage}>
+      
+      <StyledHome>
         {/* {Prop Drilling} */}
         <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
-
         <Header></Header>
         <TimeLine searchValue={valorDoFiltro} playlists={config.playlists}></TimeLine>
-      </div>
+      </StyledHome>
     </>
   );
 };
@@ -30,7 +33,10 @@ export default HomePage;
 
 
 
+
 const StyledHeader = styled.div`
+  background-color: ${({theme})=> theme.backgroundLevel1};
+
   img {
     width: 80px;
     height: 80px;
@@ -83,8 +89,9 @@ const TimeLine = ({searchValue, ...props}) => {
               {videos.filter((video)=>{
                 return video.title.toLowerCase().includes(searchValue.toLowerCase())
               }).map((video) => {
+                const Param = "./video?"+video.url
                 return (
-                  <a key={video.url} href={video.url}>
+                  <a key={video.url} href={Param}>
                     <img src={video.thumb} />
                     <span>{video.title}</span>
                   </a>
